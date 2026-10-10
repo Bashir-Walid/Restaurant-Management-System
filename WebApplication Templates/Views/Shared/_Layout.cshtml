@@ -1,0 +1,281 @@
+﻿@using WebApplication_Templates.ViewModels
+@model HomeViewModels
+<!doctype html>
+<html class="no-js" lang="zxx">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Basmoti - Restaurant Bootstrap 5 Template</title>
+    <meta name="description" content="">
+    <meta name="robots" content="noindex, follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="~/ClinetTemplate/assets/img/favicon.png">
+
+    <link rel="stylesheet" href="~/ClinetTemplate/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/ClinetTemplate/assets/css/icons.css">
+    <link rel="stylesheet" href="~/ClinetTemplate/assets/css/plugins.css">
+    <link rel="stylesheet" href="~/ClinetTemplate/assets/css/style.css">
+    <link rel="stylesheet" href="~/ClinetTemplate/assets/css/responsive.css">
+    <script src="~/ClinetTemplate/assets/js/vendor/modernizr-3.11.7.min.js"></script>
+</head>
+<body>
+   
+    <header class="header-area @(ViewData["HeaderClass"] ?? "transparent-bar header-black")">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-5 col-sm-4">
+                    <div class="logo">
+                        <a asp-controller="Home" asp-action="Index">
+
+                            @if (ViewData["HeaderClass"] != null && ViewData["HeaderClass"].ToString().Contains("transparent-bar") && !ViewData["HeaderClass"].ToString().Contains("header-black"))
+                            {
+                                <img class="logo-normal" alt="Basmoti Logo" src="@Model?.SystemSettings?.LogoLight" style="max-height:90px;" >
+
+                                <img class="logo-sticky" alt="Basmoti Logo" src="@Model?.SystemSettings?.LogoDark" style="max-height:90px;" >
+
+                            }
+                            else
+                            {
+                                <img alt="Basmoti Logo" src="@Model.SystemSettings.LogoDark" style="max-height:90px;" >
+                            }
+                            </a>
+
+                                
+                       
+                    </div>
+                </div>
+
+                <div class="col-lg-9 col-md-8 col-7 col-sm-8 relative">
+                    <div class="menu-search-bundle">
+                        <div class="main-menu">
+                            <nav>
+                                <ul>
+                                    <li class="top-hover"><a asp-controller="Home" asp-action="Index">home </a></li>
+                                    <li><a asp-controller="Home" asp-action="About">about</a></li>
+                                    <li class="mega-menu-position top-hover"><a asp-controller="Home" asp-action="Menu">menu </a></li>
+                                    <li><a asp-controller="Home" asp-action="Contact">contact us</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="search-wrap">
+                            <button class="search-toggle">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            <div class="search">
+                                <form action="#">
+                                    <input type="search" placeholder="Search here">
+                                    <button type="submit">Search</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mobile-menu-area d-md-block d-block col-md-12 col-lg-12 col-12 d-lg-none d-xl-none">
+                    <div class="mobile-menu">
+                        <nav id="mobile-menu-active">
+                            <ul class="menu-overflow">
+                                <li>
+                                    <a asp-controller="Home" asp-action="Index">HOME</a>
+                                    <ul>
+                                        <li><a asp-controller="Home" asp-action="Index">home version 1</a></li>
+                                        <li><a href="index-2.html">home version 2</a></li>
+                                        <li><a href="index-3.html">home version 3</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">pages</a>
+                                    <ul>
+                                        <li><a asp-controller="Home" asp-action="About">about us </a></li>
+                                        <li><a asp-controller="Home" asp-action="Menu">menu style 1</a></li>
+                                        <li><a href="menu-2.html">menu style 2</a></li>
+                                        <li><a href="gallery.html">gallery style 1</a></li>
+                                        <li><a href="gallery-2.html">gallery style 2</a></li>
+                                        <li><a asp-controller="Home" asp-action="Contact">contact us</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a asp-controller="Home" asp-action="Menu">menu</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">menu list 01</a>
+                                            <ul>
+                                                <li><a asp-controller="Home" asp-action="Menu">salad</a></li>
+                                                <li><a asp-controller="Home" asp-action="Menu">sandwich</a></li>
+                                                <li><a asp-controller="Home" asp-action="Menu">bread</a></li>
+                                                <li><a asp-controller="Home" asp-action="Menu">steak</a></li>
+                                                <li><a asp-controller="Home" asp-action="Menu">tuna steak</a></li>
+                                                <li><a asp-controller="Home" asp-action="Menu">spaghetti </a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#">menu list 02</a>
+                                            <ul>
+                                                <li><a asp-controller="Home" asp-action="Menu">rice</a></li>
+                                                <li><a asp-controller="Home" asp-action="Menu">pizza</a></li>
+                                                <li><a asp-controller="Home" asp-action="Menu">hamburger</a></li>
+                                                <li><a asp-controller="Home" asp-action="Menu">eggs</a></li>
+                                                <li><a asp-controller="Home" asp-action="Menu">sauces</a></li>
+                                                <li><a asp-controller="Home" asp-action="Menu">apple juice</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#">menu list 03</a>
+                                            <ul>
+                                                <li><a asp-controller="Home" asp-action="Menu">milk</a></li>
+                                                <li><a asp-controller="Home" asp-action="Menu">grape juice</a></li>
+                                                <li><a asp-controller="Home" asp-action="Menu">cookie</a></li>
+                                                <li><a asp-controller="Home" asp-action="Menu">candy</a></li>
+                                                <li><a asp-controller="Home" asp-action="Menu">cake</a></li>
+                                                <li><a asp-controller="Home" asp-action="Menu">cupcake</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#">menu list 04</a>
+                                            <ul>
+                                                <li><a asp-controller="Home" asp-action="Menu">pie</a></li>
+                                                <li><a asp-controller="Home" asp-action="Menu">strawberry</a></li>
+                                                <li><a asp-controller="Home" asp-action="Menu">sandwich</a></li>
+                                                <li><a asp-controller="Home" asp-action="Menu">bread</a></li>
+                                                <li><a asp-controller="Home" asp-action="Menu">steak</a></li>
+                                                <li><a asp-controller="Home" asp-action="Menu">hamburger</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">blog</a>
+                                    <ul>
+                                        <li><a href="blog-no-sidebar.html">Blog No sidebar</a></li>
+                                        <li><a href="blog.html">Blog sidebar</a></li>
+                                        <li><a asp-controller="Home" asp-action="ProductDetails">Blog details</a></li>
+                                    </ul>
+                                </li>
+                                <li><a asp-controller="Home" asp-action="Contact"> Contact us </a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    @RenderBody()
+
+    <footer class="footer-area">
+        <div class="footer-area-top black-bg pt-95 pb-60">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                        <div class="footer-widget mb-40">
+                            <div class="footer-title mb-30">
+                                @Html.Raw(@Model.Titles.FirstOrDefault(x => x.Keyword == "About Us")?.Title)
+                            </div>
+                            <div class="footer-about">
+                                <p>@Model.About.FirstOrDefault().FooterDesc</p>
+                                <div class="footer-map">
+                                    <a asp-controller="Home" asp-action="Contact"><i class="ion-ios-location-outline"></i> @Model.SystemSettings.Location</a>
+                                </div>
+                            </div>
+                            <div class="social-icon">
+                                <ul>
+                                    @foreach(var item in Model.MasterSocialMedia){
+                                    <li><a  href="@item.Link"><i class="@item.Icon"></i></a></li>
+                                    }
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                        <div class="footer-widget mb-40">
+                            <div class="footer-title mb-30">
+                                @Html.Raw(@Model.Titles.FirstOrDefault(x => x.Keyword == "contact Us")?.Title)
+
+                            </div>
+                            <div class="footer-cont-info">
+                       @foreach(var item in Model.MasterContactUs)
+                                       {
+                                    <div class="single-footer-cont-info">
+                                  <div class="cont-info-icon">
+                                  <i class="@item.Icon"></i>
+                                   </div>
+                          <div class="cont-info-content">
+                           <a href="@item.Link">@item.Text</a>
+                          </div>
+                      </div>
+                    }
+                          </div>
+                        </div>
+                    </div>
+                
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                        <div class="footer-widget mb-40">
+                            <div class="footer-title mb-30">
+                                @Html.Raw(@Model.Titles.FirstOrDefault(x => x.Keyword == "Opening Time")?.Title)
+
+                            </div>
+                            <div class="open-time pr-30">
+                                <ul>
+                                    @foreach (var item in Model.OpeningTime){
+                                       @if(@item.IsOpen==true){
+                                        <li>@item.Day<span>@item.StartTime - @item.EndTime</span></li>
+                                    }
+                                   else{
+                                            <li>@item.Day<span>Close</span></li>
+                                   
+                                   }
+                                   }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                        <div class="footer-widget mb-40">
+                            <div class="footer-title mb-30">
+                                @Html.Raw(@Model.Titles.FirstOrDefault(x => x.Keyword == "Newsletter")?.Title)
+
+@*                                 <h4>Newsletter</h4>
+ *@                            </div>
+                            <div class="newsletter-style">
+                               <p> @Html.Raw(@Model.Titles.FirstOrDefault(x => x.Keyword == "Newsletter")?.Desc)</p>
+    <div id="mc_embed_signup" class="subscribe-form ">
+        <form id="mc-embedded-subscribe-form" class="validate" novalidate="" target="_blank" name="mc-embedded-subscribe-form" method="post" asp-controller="Home" asp-action="SendMessage2">
+            <div id="mc_embed_signup_scroll" class="mc-form">
+                <input class="email" type="email" required="" placeholder="Enter your email" name="Email" value="">
+                <div class="mc-news" aria-hidden="true">
+                    <input type="hidden" value="" tabindex="-1" name="b_6bbb9b6f5827bd842d9640c82_05d85f18ef">
+                </div>
+                <div class="clear">
+                    <input id="mc-embedded-subscribe" class="button" type="submit" name="subscribe" value="Subscribe">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom black-bg-2 pb-25 pt-25">
+            <div class="container">
+                <div class="copyright text-center">
+                    <p>@Model.SystemSettings.FooterText</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- all js here -->
+    <script src="~/ClinetTemplate/assets/js/vendor/jquery-v1.12.4.min.js"></script>
+    <script src="~/ClinetTemplate/assets/js/popper.js"></script>
+    <script src="~/ClinetTemplate/assets/js/bootstrap.min.js"></script>
+    <script src="~/ClinetTemplate/assets/js/ajax-mail.js"></script>
+    <script src="~/ClinetTemplate/assets/js/plugins.js"></script>
+    <script src="~/ClinetTemplate/assets/js/main.js"></script>
+    
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

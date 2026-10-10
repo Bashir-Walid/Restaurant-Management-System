@@ -1,0 +1,113 @@
+﻿@using WebApplication_Templates.ViewModels
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Menu";
+
+}
+@model HomeViewModels
+
+<div class="breadcrumb-area bg-img ptb-80" style="background-image:url('/ClinetTemplate/assets/img/banner/breath.jpg');">
+    <div class="container">
+        <div class="breadcrumb-content text-center">
+
+            <h3>menu</h3>
+            <ul>
+                <li>
+                    <a asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="active">menu page </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="product-menu-area pt-100 pb-70 gray-bg">
+    <div class="container">
+        <div class="section-title text-center mb-50">
+            @Html.Raw(@Model.Titles.FirstOrDefault(x => x.Keyword == "Our Food Menu")?.Title)
+            @Html.Raw(@Model.Titles.FirstOrDefault(x => x.Keyword == "Our Food Menu")?.Desc)
+            
+        </div>
+        <div class="menu-tab-wrap mb-50">
+            <div class="menu-tab-list nav text-center">
+                <a class="active" href="#tab-all" data-bs-toggle="tab">All items</a>
+        
+                @foreach (var category in Model.MenuCategory)
+                {
+                    <a href="#tab-@category.id" data-bs-toggle="tab">@category.Name</a>
+                }
+            </div>
+        </div>
+
+        <div class="tab-content jump">
+    
+            <div id="tab-all" class="tab-pane active">
+                <div class="row">
+                    @foreach (var item in Model.MenuItems)
+                    {
+                        <div class="col-lg-6">
+                            <div class="single-menu-product mb-30">
+                                <div class="menu-product-img">
+                                    <img alt="@item.Title" src="@item.Image">
+                                </div>
+                                <div class="menu-product-content">
+                                    <div class="menu-title-price">
+                                        <div class="menu-title">
+                                            <h4>@item.Title</h4>
+                                        </div>
+                                        <div class="menu-price"><span>$@item.Price</span></div>
+                                    </div>
+                                    <p>@item.FirstDesc</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            @foreach (var category in Model.MenuCategory)
+            {
+                <div id="tab-@category.id" class="tab-pane">
+                    <div class="row">
+                        @foreach (var item in Model.MenuItems.Where(x => x.MenuCategoryId == category.id))
+                        {
+                            <div class="col-lg-6">
+                                <div class="single-menu-product mb-30">
+                                    <div class="menu-product-img">
+                                        <img alt="@item.Title" src="@item.Image">
+                                    </div>
+                                    <div class="menu-product-content">
+                                        <div class="menu-title-price">
+                                            <div class="menu-title">
+                                                <h4>@item.Title</h4>
+                                            </div>
+                                            <div class="menu-price"><span>$@item.Price</span></div>
+                                        </div>
+                                        <p>@item.FirstDesc</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+           }
+        </div>
+        
+    </div> 
+</div>
+
+<div class="brand-logo-area ptb-100">
+    <div class="container">
+        <div class="brand-logo-active owl-carousel">
+            @foreach (var item in Model.Partners)
+            {
+                <div class="single-brand-logo">
+                    <a href="@item.Link" target="_blank">
+                        <img alt="@item.Alt" src="@item.Image" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+        
+   

@@ -1,0 +1,295 @@
+﻿@model WebApplication_Templates.ViewModels.TitlesFullViewModels
+
+@{
+    ViewData["Title"] = "Titles";
+}
+
+<div id="editForm" class="card mb-4" style="display:none;">
+
+    <div class="card-header">
+        <h5 class="mb-0">Edit Title</h5>
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <form asp-area="Admin"
+                      asp-controller="Titles"
+                      asp-action="CreateOrUpdate"
+                      method="post">
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger mb-3"></div>
+
+                    <input type="hidden" asp-for="id" />
+
+                    <div class="form-group mb-3">
+
+                        <label asp-for="Keyword"
+                               class="form-label"></label>
+
+                        <input asp-for="Keyword"
+                               class="form-control"
+                               readonly />
+
+                    </div>
+
+                    <div class="form-group mb-3">
+
+                        <label asp-for="Title"
+                               class="form-label"></label>
+
+                        <input asp-for="Title"
+                               class="form-control" />
+
+                        <span asp-validation-for="Title"
+                              class="text-danger"></span>
+
+                    </div>
+
+                    <div class="form-group mb-3">
+
+                        <label asp-for="Desc"
+                               class="form-label"></label>
+
+                        <input asp-for="Desc"
+                               class="form-control" />
+
+                        <span asp-validation-for="Desc"
+                              class="text-danger"></span>
+
+                    </div>
+
+                    <div class="form-group form-check mb-3">
+
+                        <label class="form-check-label">
+
+                            <input class="form-check-input"
+                                   asp-for="IsActive" />
+
+                            @Html.DisplayNameFor(model => model.IsActive)
+
+                        </label>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <input type="submit"
+                               value="Save"
+                               class="btn btn-primary" />
+
+                        <button type="button"
+                                class="btn btn-secondary btnCancel">
+                            Cancel
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="card">
+
+    <div class="card-header">
+        <h5 class="mb-0">Titles</h5>
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover align-middle">
+
+                <thead>
+
+                    <tr>
+                        <th>Keyword</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model.list)
+                    {
+                        <tr>
+
+                            <td>
+                                <span class="badge bg-secondary">
+                                    @item.Keyword
+                                </span>
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+
+                            <td style="min-width:250px;">
+                                @Html.DisplayFor(modelItem => item.Desc)
+                            </td>
+
+                            <td>
+
+                                @if (item.IsActive)
+                                {
+                                    <span class="badge bg-success">
+                                        Active
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">
+                                        Deactive
+                                    </span>
+                                }
+
+                            </td>
+
+                            <td style="min-width:170px;">
+
+                                <a class="btn btn-warning btn-sm btnEdit"
+                                       data-id="@item.id"
+                                       data-title="@item.Title"
+                                       data-keyword="@item.Keyword"
+                                       data-desc="@item.Desc"
+                                       data-isactive="@item.IsActive">
+                                    Edit
+                                </a>
+
+                                <form asp-area="Admin"
+                                      asp-controller="Titles"
+                                      asp-action="ChangeStatus"
+                                      method="post"
+                                      style="display:inline;">
+
+                                    <input type="hidden"
+                                           name="id"
+                                           value="@item.id" />
+
+                                    @if (item.IsActive)
+                                    {
+                                        <a class="btn btn-success btn-sm btnStatus">
+                                            Active
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-danger btn-sm btnStatus">
+                                            Deactive
+                                        </a>
+                                    }
+
+                                </form>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+        $(".btnEdit").click(function () {
+
+        var id = $(this).data('id');
+        var Title = $(this).data('title');
+        var Keyword = $(this).data('keyword');
+        var Desc = $(this).data('desc');
+        var IsActive = $(this).data('isactive');
+
+        $("#id").val(id);
+        $("#Title").val(Title);
+        $("#Keyword").val(Keyword);
+        $("#Desc").val(Desc);
+
+        $("#IsActive").prop(
+        'checked',
+        IsActive === true ||
+        IsActive === 'True' ||
+        IsActive === 'true'
+        );
+
+        $("#editForm").show();
+
+        $("html, body").animate({
+        scrollTop: 0
+        }, 300);
+
+        });
+
+
+        $(".btnCancel").click(function () {
+
+        $("#id").val(0);
+        $("#Title").val("");
+        $("#Keyword").val("");
+        $("#Desc").val("");
+        $("#IsActive").prop("checked", false);
+
+        $("#editForm").hide();
+
+        });
+
+
+        $(".btnStatus").click(function () {
+
+        var form = $(this).closest("form");
+
+        Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to change status?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes"
+        }).then((result) => {
+
+        if (result.isConfirmed) {
+        form.submit();
+        }
+
+        });
+
+        });
+
+        });
+
+    </script>
+}

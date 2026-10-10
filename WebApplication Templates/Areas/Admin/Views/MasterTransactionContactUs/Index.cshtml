@@ -1,0 +1,295 @@
+﻿@model WebApplication_Templates.ViewModels.MasterTransactionContactUsFullViewModel
+
+@{
+    ViewData["Title"] = "Contact Messages";
+}
+
+<div class="card">
+
+    <div class="card-header">
+        <h5 class="mb-0">Contact Messages</h5>
+    </div>
+
+    <div class="card-body">
+
+        @if (!ViewBag.HasAnyRecord)
+        {
+            <div class="alert alert-info">
+                No messages found.
+            </div>
+        }
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover align-middle">
+
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Subject</th>
+                        <th>Message</th>
+                        <th>Date Sent</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model.list)
+                    {
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Subject)
+                            </td>
+
+                            <td style="min-width:250px;">
+                                @Html.DisplayFor(modelItem => item.Message)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Datesent)
+                            </td>
+
+                            <td style="min-width:170px;">
+
+                                <button type="button"
+                                        class="btn btn-primary btn-sm btnReply"
+                                        data-id="@item.id"
+                                        data-name="@item.Name"
+                                        data-email="@item.Email"
+                                        data-subject="@item.Subject"
+                                        data-message="@item.Message">
+                                    Reply
+                                </button>
+
+                                <form asp-action="Delete"
+                                      method="post"
+                                      style="display:inline;">
+
+                                    <input type="hidden"
+                                           asp-for="DeleteId"
+                                           value="@item.id" />
+
+                                    <a class="btn btn-danger btn-sm btnDelete">
+                                        Delete
+                                    </a>
+
+                                </form>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="modal fade"
+     id="replyModal"
+     tabindex="-1"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+
+        <div class="modal-content">
+
+            <form asp-action="Reply" method="post">
+
+                @Html.AntiForgeryToken()
+
+                <input type="hidden"
+                       name="id"
+                       id="ReplyId" />
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title">
+                        Reply To Message
+                    </h5>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label">
+                                Name
+                            </label>
+
+                            <input type="text"
+                                   id="ReplyName"
+                                   class="form-control"
+                                   readonly />
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label">
+                                Email
+                            </label>
+
+                            <input type="text"
+                                   id="ReplyEmail"
+                                   class="form-control"
+                                   readonly />
+
+                        </div>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Subject
+                        </label>
+
+                        <input type="text"
+                               id="ReplySubject"
+                               class="form-control"
+                               readonly />
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Original Message
+                        </label>
+
+                        <textarea id="OriginalMessage"
+                                  class="form-control"
+                                  rows="4"
+                                  readonly></textarea>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Your Reply
+                        </label>
+
+                        <textarea name="ReplyContent"
+                                  id="ReplyContent"
+                                  class="form-control"
+                                  rows="6"
+                                  placeholder="اكتب الرد هنا..."
+                                  required></textarea>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+
+                    <button type="submit"
+                            class="btn btn-primary">
+                        Send Reply
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+        $(".btnReply").click(function () {
+
+        var id = $(this).data('id');
+        var Name = $(this).data('name');
+        var Email = $(this).data('email');
+        var Subject = $(this).data('subject');
+        var Message = $(this).data('message');
+
+        $("#ReplyId").val(id);
+        $("#ReplyName").val(Name);
+        $("#ReplyEmail").val(Email);
+        $("#ReplySubject").val(Subject);
+        $("#OriginalMessage").val(Message);
+        $("#ReplyContent").val("");
+
+        var replyModal = new bootstrap.Modal(
+        document.getElementById('replyModal')
+        );
+
+        replyModal.show();
+
+        });
+
+
+        $(".btnDelete").click(function () {
+
+        var form = $(this).closest("form");
+
+        Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+
+        if (result.isConfirmed) {
+        form.submit();
+        }
+
+        });
+
+        });
+
+        });
+
+    </script>
+}

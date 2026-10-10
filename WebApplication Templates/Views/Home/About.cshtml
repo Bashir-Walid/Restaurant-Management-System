@@ -1,0 +1,70 @@
+﻿@using WebApplication_Templates.ViewModels
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "About Us";
+}
+@model HomeViewModels
+<div class="breadcrumb-area bg-img ptb-80" style="background-image:url('/ClinetTemplate/assets/img/banner/breath.jpg');">
+    <div class="container">
+        <div class="breadcrumb-content text-center">
+            <h3>about us</h3>
+            <ul>
+                <li>
+                    <a asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="active">about us </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="about-area ptb-95">
+    <div class="container">
+        <div class="row d-flex align-items-center">
+            <div class="col-lg-6">
+                <div class="about-content pr-30">
+                    <h2>@Html.Raw(@Model.About.FirstOrDefault().Title) </h2>
+                    <h3>@Html.Raw(@Model.About.FirstOrDefault().Brief) </h3>
+
+                        <div class="about-peragraph">
+                        <p>@Model.About.FirstOrDefault().Desc</p>
+                            <div class="default-btn-style mt-35">
+                                <a asp-controller="Home" asp-action="About">read more</a>
+                            </div>
+                        </div>
+                  
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="about-img">
+                    <img alt="" src="@Model.About.FirstOrDefault()?.Image" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="services-area pt-100 pb-70 gray-bg">
+        <div class="container">
+            <div class="section-title text-center mb-50">
+                @Html.Raw(@Model.Titles.FirstOrDefault(x => x.Keyword == "Our Services")?.Title)
+                @Html.Raw(@Model.Titles.FirstOrDefault(x => x.Keyword == "Our Services")?.Desc)
+            </div>
+            <div class="row">
+                @foreach (var item in Model.Services)
+                {
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <div class="single-service text-center mb-30">
+                            <i class="@item.Icon"></i>
+                            <h3>@item.Title</h3>
+                            <p>@item.Desc</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+</div>
+
+       
+     

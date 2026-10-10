@@ -1,0 +1,204 @@
+﻿@using WebApplication_Templates.ViewModels
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Home";
+    ViewData["HeaderClass"] = "transparent-bar header-position";
+}
+@model HomeViewModels
+
+<div class="slider-area">
+    <div class="slider-active owl-dot-style owl-carousel">
+        @foreach (var item in Model.Slider)
+            {
+        <div class="single-slider bg-img height-100vh d-flex align-items-center justify-content-center" style="background-image:url('@item.Image');">
+            <div class="slider-content pt-100">
+                <div class="slider-content-wrap slider-animated-1">
+                       
+                        <h2 class="animated"> @Html.Raw(item.Title)</h2>
+                    <h1 class="animated">@Html.Raw(item.Desc)</h1>
+                    <div class="slider-btn mt-20">
+                        <a class="animated" asp-controller="Home" asp-action="ProductDetails">read more</a>
+                    </div>
+                </div>
+                </div>
+            </div>
+                }
+            </div>
+            </div>
+  
+<div class="about-area ptb-95">
+    <div class="container">
+        <div class="row d-flex align-items-center">
+            <div class="col-lg-6">
+                <div class="about-content pr-30">
+                    @foreach (var item in Model.About)
+                    {
+                        <h2>@Html.Raw(item.Title) </h2>
+
+                        @*                     <h2>About Basmoti Restaurant </h2>
+     <h3> Basmoti ensures healthy environment. Make a short trip. </h3>
+
+ *@
+                        <h3> @Html.Raw(item.Brief) </h3>
+                        <div class="about-peragraph">
+                            <p>@item.Desc</p>
+                            <div class="default-btn-style mt-35">
+                                <a asp-controller="Home" asp-action="About">read more</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="about-img">
+                    <img alt="" src="@Model.About.FirstOrDefault().Image" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="popular-product gray-bg pt-100 pb-100">
+    <div class="container">
+        <div class="section-title text-center mb-50">
+            @Html.Raw(@Model.Titles.FirstOrDefault(x => x.Keyword == "Our Popular Dishes")?.Title)
+            @Html.Raw(@Model.Titles.FirstOrDefault(x => x.Keyword == "Our Popular Dishes")?.Desc)
+          
+        </div>
+        <div class="product-slider-active owl-carousel">
+    
+            @foreach (var item in Model.MenuItems.Where(x => x.IsMenu == true))
+            {
+                <div class="product-style-wrap">
+                    <img alt="@item.Title" src="@item.Image">
+            
+                    <div class="product-content text-center">
+                        <h4>
+                            @item.Title
+                        </h4>
+                
+                        <p>@item.FirstDesc</p>
+                
+                        <span>$@item.Price</span>
+                    </div>
+                </div>
+            }
+    
+        </div>
+    <div class="popular-bg-img">
+        <img alt="" src="@Model.SystemSettings.Bg1" >
+    </div>
+</div>
+</div>
+
+    
+<div class="book-table ptb-100 bg-img" id="book" style="background-image:url('@Model.SystemSettings.Bg2');">
+    <div class="container">
+        <div class="section-title text-center mb-50">
+            @Html.Raw(@Model.Titles.FirstOrDefault(x => x.Keyword == "book a table")?.Title)
+            @Html.Raw(@Model.Titles.FirstOrDefault(x => x.Keyword == "book a table")?.Desc)
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="reserve-form">
+                    @Html.Raw(@Model.Titles.FirstOrDefault(x => x.Keyword == "Reservation Form")?.Title)
+                    
+                    <form asp-action="SendMessage" asp-controller="Home" method="post">
+                        <div class="reserve-form-top">
+                            <input type="text" name="FullName" placeholder="Full name" required>
+                            <input type="email" name="EmailAddress" placeholder="Email address" required>
+                            <input type="text" name="MobileNumber" placeholder="Mobile number" required>
+                            <div class="date-time">
+                                <select name="AvailableDate" required>
+                                    <option value="">Select Date And Time</option>
+                                    
+                                    @if (Model.TransactionReservation != null)
+                                    {
+                                        @foreach (var item in Model.TransactionReservation)
+                                        {
+                                            <option value="@item.AvailableDate">@item.AvailableDate</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="reserve-submit mt-40">
+                            <button type="submit"> submit </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="book-img">
+                    <img src="@Model.SystemSettings.ReservationImage" alt="ReservationImage">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <div class="testimonial-area ptb-100 gray-bg">
+            <div class="container">
+                <div class="section-title text-center mb-50">
+                    @Html.Raw(@Model.Titles.FirstOrDefault(x => x.Keyword == "what people say")?.Title)
+                    @Html.Raw(@Model.Titles.FirstOrDefault(x => x.Keyword == "what people say")?.Desc)
+                </div>
+        
+                <div class="row">
+                    <div class="col-md-12">
+                
+                        <div class="testimonial-image-slider text-center">
+                            @foreach (var item in Model.Feedback)
+                            {
+                                <div class="single-testi-text">
+                                    <p>@item.Feedbacks</p>
+                                </div>
+                            }
+                        </div>
+                
+                        <div class="testimonial-text-slider text-center">
+                            @foreach (var item in Model.Feedback)
+                            {
+                        <div class="single-testi-img" >
+                            <img src="@item.Image" alt="@item.Name" style="max-width:90px; max-height: 90px;" />
+                                    <h3>@item.Name</h3>
+                                    <h5>@item.Title</h5>
+                                </div>
+                            }
+                        </div>
+                
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="offer-area gray-bg ptb-100 bg-img" style="background-image:url('@Model.Banner.Image');">
+    <div class="container">
+        <div class="row">
+            <div class="xl-auto col-xl-5 ms-auto col-lg-6 col-md-12">
+                <div class="offer-content">
+                            @Html.Raw(@Model.Titles.FirstOrDefault(x => x.Keyword == "Banner")?.Title)
+                            <h2>@Model.Banner.Title</h2>
+                            <p>@Model.Banner.Desc </p>
+                    <div class="default-btn-style book-btn mt-35">
+                        <a class="scroll-up" href="#book">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="brand-logo-area ptb-100">
+    <div class="container">
+        <div class="brand-logo-active owl-carousel">
+            @foreach (var item in Model.Partners)
+            {
+                <div class="single-brand-logo">
+                    <a href="@item.Link" target="_blank">
+                        <img alt="@item.Alt" src="@item.Image" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>

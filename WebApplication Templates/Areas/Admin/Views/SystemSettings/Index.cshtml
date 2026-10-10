@@ -1,0 +1,492 @@
+﻿@model WebApplication_Templates.ViewModels.SystemSettingsFullViewModels
+
+@{
+    ViewData["Title"] = "System Settings";
+}
+
+<div id="settingsForm"
+     class="card mb-4"
+     style="@(ViewBag.HasAnyRecord ? "display:none;" : "display:block;")">
+
+    <div class="card-header">
+        <h5 class="mb-0">
+            @(ViewBag.HasAnyRecord ? "Edit System Settings" : "Create System Settings")
+        </h5>
+    </div>
+
+    <div class="card-body">
+
+        <form asp-action="CreateOrUpdate"
+              method="post"
+              enctype="multipart/form-data">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3"></div>
+
+            <input type="hidden" asp-for="id" />
+            <input type="hidden" asp-for="LogoDark" />
+            <input type="hidden" asp-for="LogoLight" />
+            <input type="hidden" asp-for="Bg1" />
+            <input type="hidden" asp-for="Bg2" />
+            <input type="hidden" asp-for="ReservationImage" />
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+
+                    <label asp-for="LogoDark"
+                           class="form-label"></label>
+
+                    <input asp-for="ImageFileLogoDark"
+                           type="file"
+                           class="form-control" />
+
+                    <span asp-validation-for="LogoDark"
+                          class="text-danger"></span>
+
+                    <img id="LogoDark1"
+                         style="max-height:90px; width:auto; object-fit:contain; display:none;"
+                         class="rounded border mt-2" />
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label asp-for="LogoLight"
+                           class="form-label"></label>
+
+                    <input asp-for="ImageFileLogoLight"
+                           type="file"
+                           class="form-control" />
+
+                    <span asp-validation-for="LogoLight"
+                          class="text-danger"></span>
+
+                    <img id="LogoLight1"
+                         style="max-height:90px; width:auto; object-fit:contain; display:none;"
+                         class="rounded border mt-2" />
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label asp-for="Bg1"
+                           class="form-label"></label>
+
+                    <input asp-for="ImageFileBg1"
+                           type="file"
+                           class="form-control" />
+
+                    <span asp-validation-for="Bg1"
+                          class="text-danger"></span>
+
+                    <img id="Bg11"
+                         style="max-height:90px; width:auto; object-fit:contain; display:none;"
+                         class="rounded border mt-2" />
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label asp-for="Bg2"
+                           class="form-label"></label>
+
+                    <input asp-for="ImageFileBg2"
+                           type="file"
+                           class="form-control" />
+
+                    <span asp-validation-for="Bg2"
+                          class="text-danger"></span>
+
+                    <img id="Bg21"
+                         style="max-height:90px; width:auto; object-fit:contain; display:none;"
+                         class="rounded border mt-2" />
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label asp-for="ReservationImage"
+                           class="form-label"></label>
+
+                    <input asp-for="ImageFileReservationImage"
+                           type="file"
+                           class="form-control" />
+
+                    <span asp-validation-for="ReservationImage"
+                          class="text-danger"></span>
+
+                    <img id="ReservationImage1"
+                         style="max-height:90px; width:auto; object-fit:contain; display:none;"
+                         class="rounded border mt-2" />
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label asp-for="Location"
+                           class="form-label"></label>
+
+                    <input asp-for="Location"
+                           class="form-control" />
+
+                    <span asp-validation-for="Location"
+                          class="text-danger"></span>
+
+                </div>
+
+                <div class="col-md-12 mb-3">
+
+                    <label asp-for="FooterText"
+                           class="form-label"></label>
+
+                    <input asp-for="FooterText"
+                           class="form-control" />
+
+                    <span asp-validation-for="FooterText"
+                          class="text-danger"></span>
+
+                </div>
+
+                <div class="col-md-12 mb-3">
+
+                    <div class="form-check">
+
+                        <input class="form-check-input"
+                               asp-for="IsActive" />
+
+                        <label class="form-check-label"
+                               asp-for="IsActive">
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="mt-2">
+
+                <input type="submit"
+                       value="Save"
+                       class="btn btn-primary" />
+
+                <input type="reset"
+                       value="Clear"
+                       class="btn btn-secondary btnClear" />
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+
+@if (ViewBag.HasAnyRecord)
+{
+    <div class="card">
+
+        <div class="card-header">
+            <h5 class="mb-0">System Settings</h5>
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover align-middle">
+
+                    <thead>
+                        <tr>
+                            <th>Logo Dark</th>
+                            <th>Logo Light</th>
+                            <th>Bg 1</th>
+                            <th>Bg 2</th>
+                            <th>Reservation</th>
+                            <th>Location</th>
+                            <th>Footer</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var item in Model.list)
+                        {
+                            <tr>
+
+                                <td>
+                                    <img src="@item.LogoDark"
+                                         style="width:70px; height:55px; object-fit:contain;"
+                                         class="rounded border" />
+                                </td>
+
+                                <td>
+                                    <img src="@item.LogoLight"
+                                         style="width:70px; height:55px; object-fit:contain;"
+                                         class="rounded border" />
+                                </td>
+
+                                <td>
+                                    <img src="@item.Bg1"
+                                         style="width:90px; height:55px; object-fit:cover;"
+                                         class="rounded border" />
+                                </td>
+
+                                <td>
+                                    <img src="@item.Bg2"
+                                         style="width:90px; height:55px; object-fit:cover;"
+                                         class="rounded border" />
+                                </td>
+
+                                <td>
+                                    <img src="@item.ReservationImage"
+                                         style="width:90px; height:55px; object-fit:cover;"
+                                         class="rounded border" />
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Location)
+                                </td>
+
+                                <td style="min-width:180px;">
+                                    @Html.DisplayFor(modelItem => item.FooterText)
+                                </td>
+
+                                <td>
+
+                                    @if (item.IsActive)
+                                    {
+                                        <span class="badge bg-success">
+                                            Active
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">
+                                            Deactive
+                                        </span>
+                                    }
+
+                                </td>
+
+                                <td style="min-width:230px;">
+
+                                    <a class="btn btn-warning btn-sm btnEdit"
+                                           data-id="@item.id"
+                                           data-isactive="@item.IsActive"
+                                           data-logodark="@item.LogoDark"
+                                           data-logolight="@item.LogoLight"
+                                           data-bg1="@item.Bg1"
+                                           data-bg2="@item.Bg2"
+                                           data-reservationimage="@item.ReservationImage"
+                                           data-footertext="@item.FooterText"
+                                           data-location="@item.Location">
+
+                                        Edit
+
+                                    </a>
+
+                                    <form asp-action="ChangeStatus"
+                                          method="post"
+                                          style="display:inline;">
+
+                                        <input type="hidden"
+                                               name="id"
+                                               value="@item.id" />
+
+                                        @if (item.IsActive)
+                                        {
+                                            <a class="btn btn-success btn-sm btnStatus">
+                                                Active
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-danger btn-sm btnStatus">
+                                                Deactive
+                                            </a>
+                                        }
+
+                                    </form>
+
+                                    <form asp-action="Delete"
+                                          method="post"
+                                          style="display:inline;">
+
+                                        <input type="hidden"
+                                               asp-for="DeleteId"
+                                               value="@item.id" />
+
+                                        <a class="btn btn-danger btn-sm btnDelete">
+                                            Delete
+                                        </a>
+
+                                    </form>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+}
+
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+        $(".btnEdit").click(function () {
+
+        $("#settingsForm").show();
+
+        var id = $(this).data('id');
+        var LogoDark = $(this).data('logodark');
+        var LogoLight = $(this).data('logolight');
+        var Bg1 = $(this).data('bg1');
+        var Bg2 = $(this).data('bg2');
+        var ReservationImage = $(this).data('reservationimage');
+        var Location = $(this).data('location');
+        var FooterText = $(this).data('footertext');
+        var IsActive = $(this).data('isactive');
+
+        $("#id").val(id);
+
+        $("#LogoDark").val(LogoDark);
+        $("#LogoLight").val(LogoLight);
+        $("#Bg1").val(Bg1);
+        $("#Bg2").val(Bg2);
+        $("#ReservationImage").val(ReservationImage);
+
+        $("#Location").val(Location);
+        $("#FooterText").val(FooterText);
+
+        $("#IsActive").prop(
+        'checked',
+        IsActive === true ||
+        IsActive === 'True' ||
+        IsActive === 'true'
+        );
+
+        if (LogoDark) {
+        $("#LogoDark1")
+        .attr("src", LogoDark)
+        .show();
+        }
+
+        if (LogoLight) {
+        $("#LogoLight1")
+        .attr("src", LogoLight)
+        .show();
+        }
+
+        if (Bg1) {
+        $("#Bg11")
+        .attr("src", Bg1)
+        .show();
+        }
+
+        if (Bg2) {
+        $("#Bg21")
+        .attr("src", Bg2)
+        .show();
+        }
+
+        if (ReservationImage) {
+        $("#ReservationImage1")
+        .attr("src", ReservationImage)
+        .show();
+        }
+
+        $("html, body").animate({
+        scrollTop: 0
+        }, 300);
+
+        });
+
+
+        $(".btnStatus").click(function () {
+
+        var form = $(this).closest("form");
+
+        Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to change status?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes"
+        }).then((result) => {
+
+        if (result.isConfirmed) {
+        form.submit();
+        }
+
+        });
+
+        });
+
+
+        $(".btnDelete").click(function () {
+
+        var form = $(this).closest("form");
+
+        Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+
+        if (result.isConfirmed) {
+        form.submit();
+        }
+
+        });
+
+        });
+
+
+        $(".btnClear").click(function () {
+
+        $("#id").val(0);
+
+        $("#LogoDark1").hide();
+        $("#LogoLight1").hide();
+        $("#Bg11").hide();
+        $("#Bg21").hide();
+        $("#ReservationImage1").hide();
+
+        if (@(ViewBag.HasAnyRecord.ToString().ToLower())) {
+        $("#settingsForm").hide();
+        }
+
+        });
+
+        });
+
+    </script>
+}

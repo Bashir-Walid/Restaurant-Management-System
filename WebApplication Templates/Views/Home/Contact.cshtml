@@ -1,0 +1,140 @@
+﻿@using WebApplication_Templates.ViewModels
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Contact Us";
+}
+@model HomeViewModels
+
+<div class="breadcrumb-area bg-img ptb-80" style="background-image:url('/ClinetTemplate/assets/img/banner/breath.jpg');">
+    <div class="container">
+        <div class="breadcrumb-content text-center">
+            <h3>Contact us</h3>
+            <ul>
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li class="active">Contact us</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="contact-area pt-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="contact-message-wrapper">
+                    <h4 class="contact-title mb-25">Leave Us a Message</h4>
+                    <div class="contact-message">
+                        
+                        <form id="my-custom-form"
+                              asp-controller="Home"
+                              asp-action="SendMessage3"
+                              method="post">
+
+                            @Html.AntiForgeryToken()
+
+                            <div class="row">
+
+                                <div class="col-lg-6">
+                                    <div class="contact-form-style mb-20">
+                                        <input name="Name"
+                                               placeholder="Full Name"
+                                               type="text">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="contact-form-style mb-20">
+                                        <input name="Email"
+                                               placeholder="Email Address"
+                                               type="email">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="contact-form-style mb-20">
+                                        <input name="Subject"
+                                               placeholder="Subject"
+                                               type="text">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="contact-form-style">
+                                        <textarea name="Message"
+                                                  placeholder="Message"></textarea>
+
+                                        <button class="submit btn-style"
+                                                type="submit">
+                                            SEND MESSAGE
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                        
+                        <p class="form-messege"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="contact-info-area">
+        
+                    <div class="contact-title mb-18">
+                        @Html.Raw(Model.Titles.FirstOrDefault(x => x.Keyword == "contact Us")?.Title)
+            
+                        @Html.Raw(Model.Titles.FirstOrDefault(x => x.Keyword == "contact Us")?.Desc)
+                    </div>
+        
+                    <div class="footer-cont-info mt-4">
+                        @foreach (var item in Model.MasterContactUs)
+                        {
+                            <div class="single-footer-cont-info mb-30">
+                    
+                                <div class="cont-info-icon">
+                                    <i class="@item.Icon" href="@item.Link"></i>
+                                </div>
+                    
+                                <div class="cont-info-content">
+                                    <span style="display: block; font-weight: bold; color: #333; text-transform: uppercase; margin-bottom: 5px;">
+                                        @item.Text :
+                                    </span>
+                                </div>
+                    
+                            </div>
+                        }
+                    </div>
+        
+                </div>
+            </div>
+        </div>
+
+        <div class="map-area pt-100">
+            <div id="googleMap"></div>
+        </div>
+    </div>
+</div>
+
+<div class="pt-50"></div>
+
+@section Scripts {
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzcEM8z2_imGO8TMRmJEpDEahvZ7KYY_U"></script>
+    <script>
+        function init() {
+        var mapOptions = {
+        zoom: 11,
+        scrollwheel: false,
+        center: new google.maps.LatLng(40.709896, -73.995481)
+        };
+        var mapElement = document.getElementById('googleMap');
+        var map = new google.maps.Map(mapElement, mapOptions);
+        var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(40.709896, -73.995481),
+        map: map,
+        icon: '/ClinetTemplate/assets/img/icon-img/map.png',
+        animation:google.maps.Animation.BOUNCE
+        });
+        }
+        google.maps.event.addDomListener(window, 'load', init);
+    </script>
+}

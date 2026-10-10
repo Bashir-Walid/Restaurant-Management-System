@@ -1,0 +1,88 @@
+﻿@using WebApplication_Templates.ViewModels
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "ProductDetails";
+    int counter = 1;
+}
+@model HomeViewModels
+
+<div class="breadcrumb-area bg-img ptb-80" style="background-image:url('/ClinetTemplate/assets/img/banner/breath.jpg');">
+    <div class="container">
+        <div class="breadcrumb-content text-center">
+            @Html.Raw(Model.Titles?.FirstOrDefault(x => x.Keyword == "blog sidebar")?.Title)
+            <ul>
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li class="active">blog details </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="blog-area pt-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-xl-9 ">
+                <div class="blog-details-wrapper">
+                    @if (Model.MenuItems != null)
+                    {
+                        foreach (var item in Model.MenuItems)
+                        {
+                            <div class="single-blog-wrapper mb-50">
+                                <div class="blog-img mb-30">
+                                    <a href="#">
+                                        <img src="@item.Image" alt="@item.Title">
+                                    </a>
+                                    <span class="blogpost-time-date">
+                                        <span class="date">@counter.ToString("00")</span>
+                                        <span class="month">Feb</span>
+                                    </span>
+                                </div>
+                                <h2>@item.Title</h2>
+                                <p>@item.FirstDesc</p>
+                                @if (!string.IsNullOrEmpty(item.SecondDesc))
+                                {
+                                    <blockquote class="importent-title">
+                                        <h4>@item.SecondDesc</h4>
+                                    </blockquote>
+                                }
+                            </div>
+                            counter++;
+                        }
+                    }
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-xl-3">
+                <div class="sidebar-wrapper gray-bg-7 shop-sidebar-mrg">
+                    <div class="sidebar-widget">
+                        <h4 class="sidebar-title">Recent Posts</h4>
+                        <div class="recent-posts-wrap mt-30">
+                            @if (Model.MenuItems != null)
+                            {
+                                foreach (var item in Model.MenuItems.Take(4))
+                                {
+                                    <div class="single-recent-posts mb-20" style="display:flex; width:100%; align-items:center; gap:15px; clear:both;">
+                                        <div class="recent-posts-img" style="width:85px; min-width:85px; height:70px;">
+                                            <a asp-controller="Home" asp-action="ProductDetails" asp-route-id="@item.id">
+                                                <img src="@item.Image" alt="@item.Title" style="width:85px; height:70px; object-fit:cover; display:block;">
+                                            </a>
+                                        </div>
+                                        <div class="recent-posts-content" style="flex:1;">
+                                            <h4>
+                                                <a asp-controller="Home" asp-action="ProductDetails" asp-route-id="@item.id">
+                                                    @item.Title
+                                                </a>
+                                            </h4>
+                                            <span>$@item.Price</span>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ptb-30"></div>

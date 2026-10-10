@@ -1,0 +1,318 @@
+﻿@model WebApplication_Templates.ViewModels.MasterContactUsFullViewModles
+
+@{
+    ViewData["Title"] = "Contact Us";
+}
+
+<div class="card mb-4">
+
+    <div class="card-header">
+        <h5 class="mb-0">Add / Edit Contact</h5>
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <form asp-action="CreateOrUpdate"
+                      method="post"
+                      enctype="multipart/form-data">
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger mb-3"></div>
+
+                    <input type="hidden" asp-for="id" />
+
+                    <div class="form-group mb-3">
+
+                        <label asp-for="Text"
+                               class="form-label"></label>
+
+                        <input asp-for="Text"
+                               class="form-control" />
+
+                        <span asp-validation-for="Text"
+                              class="text-danger"></span>
+
+                    </div>
+
+                    <div class="form-group mb-3">
+
+                        <label asp-for="Link"
+                               class="form-label"></label>
+
+                        <input asp-for="Link"
+                               class="form-control" />
+
+                        <span asp-validation-for="Link"
+                              class="text-danger"></span>
+
+                    </div>
+
+                    <div class="form-group mb-3">
+
+                        <label asp-for="Icon"
+                               class="form-label"></label>
+
+                        <input asp-for="Icon"
+                               class="form-control" />
+
+                        <span asp-validation-for="Icon"
+                              class="text-danger"></span>
+
+                    </div>
+
+                    <div class="form-group form-check mb-3">
+
+                        <label class="form-check-label">
+
+                            <input class="form-check-input"
+                                   asp-for="IsActive" />
+
+                            @Html.DisplayNameFor(model => model.IsActive)
+
+                        </label>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <input type="submit"
+                               value="Save"
+                               class="btn btn-primary" />
+
+                        <input type="reset"
+                               value="Clear"
+                               class="btn btn-secondary btnClear" />
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="card">
+
+    <div class="card-header">
+        <h5 class="mb-0">Contact List</h5>
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover align-middle">
+
+                <thead>
+                    <tr>
+                        <th>Icon</th>
+                        <th>Text</th>
+                        <th>Link</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model.list)
+                    {
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Icon)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Text)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Link)
+                            </td>
+
+                            <td>
+
+                                @if (item.IsActive)
+                                {
+                                    <span class="badge bg-success">
+                                        Active
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">
+                                        Deactive
+                                    </span>
+                                }
+
+                            </td>
+
+                            <td style="min-width:230px;">
+
+                                <input type="button"
+                                       value="Edit"
+                                       class="btn btn-warning btn-sm btnEdit"
+                                       data-id="@item.id"
+                                       data-icon="@item.Icon"
+                                       data-link="@item.Link"
+                                       data-text="@item.Text"
+                                       data-isactive="@item.IsActive" />
+
+                                <form asp-action="ChangeStatus"
+                                      method="post"
+                                      style="display:inline;">
+
+                                    <input type="hidden"
+                                           name="id"
+                                           value="@item.id" />
+
+                                    @if (item.IsActive)
+                                    {
+                                        <a class="btn btn-success btn-sm btnStatus">
+                                            Active
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-danger btn-sm btnStatus">
+                                            Deactive
+                                        </a>
+                                    }
+
+                                </form>
+
+                                <form asp-action="Delete"
+                                      method="post"
+                                      style="display:inline;">
+
+                                    <input type="hidden"
+                                           asp-for="DeleteId"
+                                           value="@item.id" />
+
+                                    <a class="btn btn-danger btn-sm btnDelete">
+                                        Delete
+                                    </a>
+
+                                </form>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+        $(".btnEdit").click(function () {
+
+        var id = $(this).data('id');
+        var Icon = $(this).data('icon');
+        var Link = $(this).data('link');
+        var Text = $(this).data('text');
+        var IsActive = $(this).data('isactive');
+
+        $("#id").val(id);
+        $("#Icon").val(Icon);
+        $("#Link").val(Link);
+        $("#Text").val(Text);
+
+        $("#IsActive").prop(
+        'checked',
+        IsActive === true ||
+        IsActive === 'True' ||
+        IsActive === 'true'
+        );
+
+        $("html, body").animate({
+        scrollTop: 0
+        }, 300);
+
+        });
+
+
+        $(".btnStatus").click(function () {
+
+        var form = $(this).closest("form");
+
+        Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to change status?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes"
+        }).then((result) => {
+
+        if (result.isConfirmed) {
+        form.submit();
+        }
+
+        });
+
+        });
+
+
+        $(".btnDelete").click(function () {
+
+        var form = $(this).closest("form");
+
+        Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+
+        if (result.isConfirmed) {
+        form.submit();
+        }
+
+        });
+
+        });
+
+
+        $(".btnClear").click(function () {
+
+        $("#id").val(0);
+
+        });
+
+        });
+
+    </script>
+}

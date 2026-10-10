@@ -1,0 +1,448 @@
+﻿@model WebApplication_Templates.ViewModels.TransactionReservationFullViewModels
+
+@{
+    ViewData["Title"] = "Reservations";
+}
+
+<div class="card mb-4">
+
+    <div class="card-header">
+        <h5 class="mb-0">Add / Edit Available Reservation</h5>
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <form asp-action="CreateOrUpdate" method="post">
+
+                    <input type="hidden" asp-for="id" />
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger mb-3"></div>
+
+                    <div class="form-group mb-3">
+
+                        <label asp-for="AvailableDate"
+                               class="form-label"></label>
+
+                        <input asp-for="AvailableDate"
+                               class="form-control" />
+
+                        <span asp-validation-for="AvailableDate"
+                              class="text-danger"></span>
+
+                    </div>
+
+                    <div class="form-group form-check mb-3">
+
+                        <label class="form-check-label">
+
+                            <input class="form-check-input"
+                                   asp-for="IsActive" />
+
+                            @Html.DisplayNameFor(model => model.IsActive)
+
+                        </label>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <input type="submit"
+                               value="Save"
+                               class="btn btn-primary" />
+
+                        <input type="reset"
+                               value="Clear"
+                               class="btn btn-secondary btnClear" />
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="card">
+
+    <div class="card-header">
+        <h5 class="mb-0">Reservations</h5>
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover align-middle">
+
+                <thead>
+                    <tr>
+                        <th>Available Date</th>
+                        <th>Full Name</th>
+                        <th>Mobile Number</th>
+                        <th>Email Address</th>
+                        <th>Date Sent</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model.list)
+                    {
+                        bool isRealBooking = item.EmailAddress != "bacher@esw.com";
+
+                        <tr>
+
+                            <td>
+                                <span class="text-primary fw-bold">
+                                    @Html.DisplayFor(modelItem => item.AvailableDate)
+                                </span>
+                            </td>
+
+                            @if (isRealBooking)
+                            {
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FullName)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MobileNumber)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EmailAddress)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Datesent)
+                                </td>
+                            }
+                            else
+                            {
+                                <td colspan="4"
+                                    class="text-center text-muted"
+                                    style="background-color:#f8f9fa;">
+
+                                    <em>
+                                        -- موعد متاح في النظام ولم يتم حجزه بعد --
+                                    </em>
+
+                                </td>
+                            }
+
+                            <td>
+
+                                @if (item.IsActive)
+                                {
+                                    <span class="badge bg-success">
+                                        Active
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">
+                                        Deactive
+                                    </span>
+                                }
+
+                            </td>
+
+                            <td style="min-width:280px;">
+
+                                <a class="btn btn-warning btn-sm btnEdit"
+                                       data-id="@item.id"
+                                       data-isactive="@item.IsActive"
+                                       data-availabledate="@item.AvailableDate">
+                                    Edit
+                                </a>
+
+                                <form asp-action="ChangeStatus"
+                                      method="post"
+                                      style="display:inline;">
+
+                                    <input type="hidden"
+                                           name="id"
+                                           value="@item.id" />
+
+                                    @if (item.IsActive)
+                                    {
+                                        <a class="btn btn-success btn-sm btnStatus">
+                                            Active
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-danger btn-sm btnStatus">
+                                            Deactive
+                                        </a>
+                                    }
+
+                                </form>
+
+                                <form asp-action="Delete"
+                                      method="post"
+                                      style="display:inline;">
+
+                                    <input type="hidden"
+                                           asp-for="DeleteId"
+                                           value="@item.id" />
+
+                                    <a class="btn btn-danger btn-sm btnDelete">
+                                        Delete
+                                    </a>
+
+                                </form>
+
+                                @if (isRealBooking)
+                                {
+                                    <button type="button"
+                                            class="btn btn-primary btn-sm btnReply"
+                                            data-id="@item.id"
+                                            data-name="@item.FullName"
+                                            data-email="@item.EmailAddress"
+                                            data-date="@item.AvailableDate">
+                                        Confirm
+                                    </button>
+                                }
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="modal fade"
+     id="replyModal"
+     tabindex="-1"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <form asp-action="Reply" method="post">
+
+                @Html.AntiForgeryToken()
+
+                <input type="hidden"
+                       name="id"
+                       id="ReplyId" />
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title">
+                        Confirm Reservation
+                    </h5>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Customer
+                        </label>
+
+                        <input type="text"
+                               id="ReplyName"
+                               class="form-control"
+                               readonly />
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Email
+                        </label>
+
+                        <input type="text"
+                               id="ReplyEmail"
+                               class="form-control"
+                               readonly />
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Reservation Date
+                        </label>
+
+                        <input type="text"
+                               id="ReplyDate"
+                               class="form-control"
+                               readonly />
+
+                    </div>
+
+                    <div class="alert alert-info">
+                        سيتم إرسال رسالة تأكيد الحجز للعميل، وبعد الإرسال سيتم حذف الحجز من القائمة.
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+
+                    <button type="submit"
+                            class="btn btn-primary">
+                        Send Confirmation
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+        $(".btnEdit").click(function () {
+
+        var id = $(this).data('id');
+        var AvailableDate = $(this).data('availabledate');
+        var IsActive = $(this).data('isactive');
+
+        $("#id").val(id);
+        $("#AvailableDate").val(AvailableDate);
+
+        $("#IsActive").prop(
+        'checked',
+        IsActive === true ||
+        IsActive === 'True' ||
+        IsActive === 'true'
+        );
+
+        $("html, body").animate({
+        scrollTop: 0
+        }, 300);
+
+        });
+
+
+        $(".btnReply").click(function () {
+
+        var id = $(this).data('id');
+        var Name = $(this).data('name');
+        var Email = $(this).data('email');
+        var DateValue = $(this).data('date');
+
+        $("#ReplyId").val(id);
+        $("#ReplyName").val(Name);
+        $("#ReplyEmail").val(Email);
+        $("#ReplyDate").val(DateValue);
+
+        var replyModal = new bootstrap.Modal(
+        document.getElementById('replyModal')
+        );
+
+        replyModal.show();
+
+        });
+
+
+        $(".btnStatus").click(function () {
+
+        var form = $(this).closest("form");
+
+        Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to change status?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes"
+        }).then((result) => {
+
+        if (result.isConfirmed) {
+        form.submit();
+        }
+
+        });
+
+        });
+
+
+        $(".btnDelete").click(function () {
+
+        var form = $(this).closest("form");
+
+        Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+
+        if (result.isConfirmed) {
+        form.submit();
+        }
+
+        });
+
+        });
+
+
+        $(".btnClear").click(function () {
+
+        $("#id").val(0);
+
+        });
+
+        });
+
+    </script>
+}

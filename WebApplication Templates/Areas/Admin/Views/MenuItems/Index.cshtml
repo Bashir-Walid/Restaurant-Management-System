@@ -1,0 +1,462 @@
+﻿@model WebApplication_Templates.ViewModels.MenuItemsFullViewModels
+
+@{
+    ViewData["Title"] = "Menu Items";
+}
+
+<div class="card mb-4">
+
+    <div class="card-header">
+        <h5 class="mb-0">Add / Edit Menu Item</h5>
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <form asp-action="CreateOrUpdate"
+                      method="post"
+                      enctype="multipart/form-data">
+
+                    <input type="hidden" asp-for="id" />
+                    <input type="hidden" asp-for="Image" />
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger mb-3"></div>
+
+                    <div class="form-group mb-3">
+
+                        <label asp-for="Image"
+                               class="form-label"></label>
+
+                        <input asp-for="MenuItemsImageFile"
+                               type="file"
+                               class="form-control" />
+
+                        <span asp-validation-for="Image"
+                              class="text-danger"></span>
+
+                        <img id="Image1"
+                             style="max-height:100px; width:auto; object-fit:contain; display:none;"
+                             class="rounded border mt-2" />
+
+                    </div>
+
+                    <div class="form-group mb-3">
+
+                        <label asp-for="Title"
+                               class="form-label"></label>
+
+                        <input asp-for="Title"
+                               class="form-control" />
+
+                        <span asp-validation-for="Title"
+                              class="text-danger"></span>
+
+                    </div>
+
+                    <div class="form-group mb-3">
+
+                        <label asp-for="FirstDesc"
+                               class="form-label"></label>
+
+                        <input asp-for="FirstDesc"
+                               class="form-control" />
+
+                        <span asp-validation-for="FirstDesc"
+                              class="text-danger"></span>
+
+                    </div>
+
+                    <div class="form-group mb-3">
+
+                        <label asp-for="SecondDesc"
+                               class="form-label"></label>
+
+                        <input asp-for="SecondDesc"
+                               class="form-control" />
+
+                        <span asp-validation-for="SecondDesc"
+                              class="text-danger"></span>
+
+                    </div>
+
+                    <div class="form-group mb-3">
+
+                        <label asp-for="Price"
+                               class="form-label"></label>
+
+                        <input asp-for="Price"
+                               class="form-control" />
+
+                        <span asp-validation-for="Price"
+                              class="text-danger"></span>
+
+                    </div>
+
+                    <div class="form-group mb-3">
+
+                        <label asp-for="MenuCategoryId"
+                               class="form-label"></label>
+
+                        <select asp-for="MenuCategoryId"
+                                class="form-control">
+
+                            <option value="">Select Menu Category</option>
+
+                            @foreach (var MenuCategory in Model.listet)
+                            {
+                                <option value="@MenuCategory.id">
+                                    @MenuCategory.Name
+                                </option>
+                            }
+
+                        </select>
+
+                        <span asp-validation-for="MenuCategoryId"
+                              class="text-danger"></span>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+
+                            <div class="form-check">
+
+                                <input class="form-check-input"
+                                       asp-for="IsActive" />
+
+                                <label class="form-check-label"
+                                       asp-for="IsActive">
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <div class="form-check">
+
+                                <input class="form-check-input"
+                                       asp-for="IsMenu" />
+
+                                <label class="form-check-label"
+                                       asp-for="IsMenu">
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <input type="submit"
+                               value="Save"
+                               class="btn btn-primary" />
+
+                        <input type="reset"
+                               value="Clear"
+                               class="btn btn-secondary btnClear" />
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="card">
+
+    <div class="card-header">
+        <h5 class="mb-0">Menu Items List</h5>
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover align-middle">
+
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>First Description</th>
+                        <th>Second Description</th>
+                        <th>Price</th>
+                        <th>Menu</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model.list)
+                    {
+                        <tr>
+
+                            <td>
+                                @Model.listet.FirstOrDefault(x => x.id == item.MenuCategoryId)?.Name
+                            </td>
+
+                            <td>
+
+                                @if (!string.IsNullOrWhiteSpace(item.Image))
+                                {
+                                    <img src="@item.Image"
+                                         style="width:100px; height:70px; object-fit:cover;"
+                                         class="rounded border" />
+                                }
+
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FirstDesc)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SecondDesc)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Price)
+                            </td>
+
+                            <td>
+
+                                @if (item.IsMenu)
+                                {
+                                    <span class="badge bg-primary">
+                                        Menu
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">
+                                        Not Menu
+                                    </span>
+                                }
+
+                            </td>
+
+                            <td>
+
+                                @if (item.IsActive)
+                                {
+                                    <span class="badge bg-success">
+                                        Active
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">
+                                        Deactive
+                                    </span>
+                                }
+
+                            </td>
+
+                            <td style="min-width:230px;">
+
+                                <a class="btn btn-warning btn-sm btnEdit"
+                                       data-id="@item.id"
+                                       data-isactive="@item.IsActive"
+                                       data-ismenu="@item.IsMenu"
+                                       data-image="@item.Image"
+                                       data-title="@item.Title"
+                                       data-firstdesc="@item.FirstDesc"
+                                       data-seconddesc="@item.SecondDesc"
+                                       data-price="@item.Price"
+                                       data-menucategoryid="@item.MenuCategoryId">
+                                    Edit
+                                </a>
+
+                                <form asp-action="ChangeStatus"
+                                      method="post"
+                                      style="display:inline;">
+
+                                    <input type="hidden"
+                                           name="id"
+                                           value="@item.id" />
+
+                                    @if (item.IsActive)
+                                    {
+                                        <a class="btn btn-success btn-sm btnStatus">
+                                            Active
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-danger btn-sm btnStatus">
+                                            Deactive
+                                        </a>
+                                    }
+
+                                </form>
+
+                                <form asp-action="Delete"
+                                      method="post"
+                                      style="display:inline;">
+
+                                    <input type="hidden"
+                                           asp-for="DeleteId"
+                                           value="@item.id" />
+
+                                    <a class="btn btn-danger btn-sm btnDelete">
+                                        Delete
+                                    </a>
+
+                                </form>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+        $(".btnEdit").click(function () {
+
+        var id = $(this).data('id');
+        var Image = $(this).data('image');
+        var Title = $(this).data('title');
+        var FirstDesc = $(this).data('firstdesc');
+        var SecondDesc = $(this).data('seconddesc');
+        var Price = $(this).data('price');
+        var MenuCategoryId = $(this).data('menucategoryid');
+        var IsActive = $(this).data('isactive');
+        var IsMenu = $(this).data('ismenu');
+
+        $("#id").val(id);
+        $("#Image").val(Image);
+        $("#Title").val(Title);
+        $("#FirstDesc").val(FirstDesc);
+        $("#SecondDesc").val(SecondDesc);
+        $("#Price").val(Price);
+        $("#MenuCategoryId").val(MenuCategoryId);
+
+        $("#IsActive").prop(
+        'checked',
+        IsActive === true ||
+        IsActive === 'True' ||
+        IsActive === 'true'
+        );
+
+        $("#IsMenu").prop(
+        'checked',
+        IsMenu === true ||
+        IsMenu === 'True' ||
+        IsMenu === 'true'
+        );
+
+        if (Image) {
+        $("#Image1")
+        .attr("src", Image)
+        .show();
+        }
+
+        $("html, body").animate({
+        scrollTop: 0
+        }, 300);
+
+        });
+
+
+        $(".btnStatus").click(function () {
+
+        var form = $(this).closest("form");
+
+        Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to change status?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes"
+        }).then((result) => {
+
+        if (result.isConfirmed) {
+        form.submit();
+        }
+
+        });
+
+        });
+
+
+        $(".btnDelete").click(function () {
+
+        var form = $(this).closest("form");
+
+        Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+
+        if (result.isConfirmed) {
+        form.submit();
+        }
+
+        });
+
+        });
+
+
+        $(".btnClear").click(function () {
+
+        $("#id").val(0);
+        $("#Image").val("");
+        $("#Image1").hide();
+        $("#IsMenu").prop("checked", false);
+
+        });
+
+        });
+
+    </script>
+}
