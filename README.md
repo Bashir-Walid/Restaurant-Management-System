@@ -1,17 +1,4 @@
-ممتاز، الرابط هذا هو **مسار المشروع نفسه داخل الريبو**، يعني الرفع نجح.
 
-هسا الخطوة الجاية مباشرة: نضيف **README احترافي** للمشروع، لأنه هذا أول شيء رح يشوفه أي HR أو Developer يدخل على الريبو.
-
-افتح صفحة الريبو الرئيسية:
-`Restaurant-Management-System`
-
-وبعدين اضغط **Add a README** أو أنشئ ملف جديد باسم:
-
-`README.md`
-
-وحط فيه هذا:
-
-```md
 # Restaurant Management System
 
 A full-stack restaurant management web application built with ASP.NET Core MVC, C#, Entity Framework Core, SQL Server, and ASP.NET Identity.
