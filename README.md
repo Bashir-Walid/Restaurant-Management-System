@@ -1,13 +1,14 @@
-
+```md
 # Restaurant Management System
 
 A full-stack restaurant management web application built with ASP.NET Core MVC, C#, Entity Framework Core, SQL Server, and ASP.NET Identity.
 
-The project includes a public restaurant website and a complete administration dashboard for managing dynamic website content and user interactions.
+The system includes a public restaurant website and a complete administration dashboard for managing website content and user interactions.
 
 ## Features
 
 ### Public Website
+
 - Restaurant home page
 - About section
 - Menu categories and menu items
@@ -19,9 +20,9 @@ The project includes a public restaurant website and a complete administration d
 - Reservation functionality
 
 ### Admin Dashboard
-- Secure login using ASP.NET Identity
-- Manage menu categories
-- Manage menu items
+
+- Secure authentication using ASP.NET Identity
+- Manage menu categories and menu items
 - Manage restaurant information
 - Manage banners and sliders
 - Manage services
@@ -31,13 +32,14 @@ The project includes a public restaurant website and a complete administration d
 - Manage newsletter subscriptions
 - Manage contact messages
 - Reply to contact messages
-- Activate/deactivate records
+- Activate and deactivate records
 - Upload and manage images
 - Dynamic content management
 
 ## Technologies Used
 
 ### Backend
+
 - C#
 - ASP.NET Core MVC
 - Entity Framework Core
@@ -47,10 +49,12 @@ The project includes a public restaurant website and a complete administration d
 - ViewModels
 
 ### Database
+
 - SQL Server
 - SQL Server Management Studio
 
 ### Frontend
+
 - HTML
 - CSS
 - JavaScript
@@ -58,61 +62,62 @@ The project includes a public restaurant website and a complete administration d
 - Razor Views
 
 ### Development Tools
+
 - Visual Studio
 - Git
 - GitHub
 
 ## Project Structure
 
-The project follows an ASP.NET Core MVC structure with:
+The project follows an ASP.NET Core MVC architecture and includes:
 
 - Areas for administration functionality
 - Controllers
 - Models
 - ViewModels
-- Repository pattern
-- Mapping extensions
+- Repository Pattern
+- Mapping Extensions
 - Helpers
-- Entity Framework Core database context
+- Entity Framework Core DbContext
 - ASP.NET Identity authentication and authorization
 
 ## Screenshots
 
-Screenshots of the system will be added here.
+Screenshots of the application will be added here.
 
 ### Public Website
-`Home Page`
+Home Page
 
 ### Admin Dashboard
-`Dashboard`
+Dashboard
 
 ### Content Management
-`Menu Management`
+Menu Management
 
 ### Contact Messages
-`Contact Management`
+Contact Management
 
 ## Database Setup
 
-1. Configure the connection string in `appsettings.json`.
+Configure the connection string in `appsettings.json`.
 
 Example:
 
 ```json
-"ConnectionStrings": {
-  "DefaultConnection": "Server=YOUR_SERVER;Database=RestaurantDb;Trusted_Connection=True;TrustServerCertificate=True;"
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=YOUR_SERVER;Database=RestaurantDb;Trusted_Connection=True;TrustServerCertificate=True;"
+  }
 }
 ```
 
-2. Open Package Manager Console.
-
-3. Create a migration:
+Open Package Manager Console and create a migration:
 
 ```powershell
 Add-Migration InitialCreate
 ```
 
-4. Update the database:
+Then update the database:
 
 ```powershell
 Update-Database
@@ -120,19 +125,18 @@ Update-Database
 
 ## How to Run
 
-1. Clone the repository:
+Clone the repository:
 
 ```bash
 git clone https://github.com/Bashir-Walid/Restaurant-Management-System.git
 ```
 
-2. Open the solution in Visual Studio.
+Then:
 
-3. Configure the SQL Server connection string.
-
-4. Apply Entity Framework Core migrations.
-
-5. Run the project.
+1. Open the solution in Visual Studio.
+2. Configure the SQL Server connection string.
+3. Apply Entity Framework Core migrations.
+4. Run the project.
 
 ## What I Learned
 
@@ -160,4 +164,5 @@ This project was developed during practical ASP.NET Core MVC (.NET 8) training a
 **Bashir Walid Ebdah**
 
 - LinkedIn: https://www.linkedin.com/in/bashir-walid/
-- GitHub: https://github.com/Bashir-Walidots
+- GitHub: https://github.com/Bashir-Walid
+```
