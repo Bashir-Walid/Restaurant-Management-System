@@ -62,18 +62,35 @@
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
 ###############################################################################
-# Exclude third-party libraries from GitHub language statistics
+# Normalize line endings
 ###############################################################################
+* text=auto
+
+###############################################################################
+# Exclude third-party/template frontend assets from GitHub language statistics
+###############################################################################
+
+# Common libraries
 wwwroot/lib/** linguist-vendored
 **/wwwroot/lib/** linguist-vendored
-*.min.js linguist-vendored
-*.min.css linguist-vendored
-# Exclude frontend template assets from GitHub language statistics
+
+# Admin templates
 wwwroot/AdminTemplate/** linguist-vendored
 **/wwwroot/AdminTemplate/** linguist-vendored
 
+# Generic template/assets folders
 wwwroot/assets/** linguist-vendored
 **/wwwroot/assets/** linguist-vendored
 
-wwwroot/js/** linguist-vendored
-**/wwwroot/js/** linguist-vendored
+# Minified frontend files
+*.min.js linguist-vendored
+*.min.css linguist-vendored
+
+# Third-party plugins
+**/plugins/** linguist-vendored
+**/vendor/** linguist-vendored
+**/vendors/** linguist-vendored
+
+# Fonts / template packages
+**/fonts/** linguist-vendored
+**/webfonts/** linguist-vendored
