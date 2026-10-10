@@ -81,9 +81,6 @@ The project follows an ASP.NET Core MVC architecture and includes:
 - Entity Framework Core DbContext
 - ASP.NET Identity authentication and authorization
 
-## Screenshots
-
-Screenshots of the application will be added here.
 
 ### Public Website
 Home Page
