@@ -94,3 +94,16 @@ wwwroot/assets/** linguist-vendored
 # Fonts / template packages
 **/fonts/** linguist-vendored
 **/webfonts/** linguist-vendored
+# Third-party/template assets
+**/wwwroot/lib/** linguist-vendored
+**/wwwroot/AdminTemplate/** linguist-vendored
+**/wwwroot/assets/** linguist-vendored
+**/plugins/** linguist-vendored
+**/vendor/** linguist-vendored
+**/vendors/** linguist-vendored
+*.min.js linguist-vendored
+*.min.css linguist-vendored
+
+# Template-heavy Razor views
+**/Views/** linguist-vendored
+**/Areas/**/Views/** linguist-vendored
