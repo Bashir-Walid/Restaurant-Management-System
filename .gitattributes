@@ -107,3 +107,7 @@ wwwroot/assets/** linguist-vendored
 # Template-heavy Razor views
 **/Views/** linguist-vendored
 **/Areas/**/Views/** linguist-vendored
+# Ignore template CSS from language statistics
+**/wwwroot/**/css/** linguist-vendored
+**/wwwroot/**/scss/** linguist-vendored
+**/wwwroot/**/sass/** linguist-vendored
