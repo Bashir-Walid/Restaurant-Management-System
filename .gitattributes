@@ -61,3 +61,10 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+###############################################################################
+# Exclude third-party libraries from GitHub language statistics
+###############################################################################
+wwwroot/lib/** linguist-vendored
+**/wwwroot/lib/** linguist-vendored
+*.min.js linguist-vendored
+*.min.css linguist-vendored
