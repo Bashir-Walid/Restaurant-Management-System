@@ -68,3 +68,12 @@ wwwroot/lib/** linguist-vendored
 **/wwwroot/lib/** linguist-vendored
 *.min.js linguist-vendored
 *.min.css linguist-vendored
+# Exclude frontend template assets from GitHub language statistics
+wwwroot/AdminTemplate/** linguist-vendored
+**/wwwroot/AdminTemplate/** linguist-vendored
+
+wwwroot/assets/** linguist-vendored
+**/wwwroot/assets/** linguist-vendored
+
+wwwroot/js/** linguist-vendored
+**/wwwroot/js/** linguist-vendored
